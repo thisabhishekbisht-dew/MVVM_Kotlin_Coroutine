@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.abhi.mvvm.databinding.AdapterMovieBinding
+import com.abhi.mvvm.listners.OnItemClickListener
 import com.abhi.mvvm.model.Movie
 import com.abhi.mvvm.util.ValidationUtil
 import com.bumptech.glide.Glide
@@ -11,9 +12,10 @@ import com.bumptech.glide.Glide
 class MovieAdapter : RecyclerView.Adapter<MainViewHolder>() {
 
     var movieList = mutableListOf<Movie>()
-
-    fun setMovies(movies: List<Movie>) {
+    var listener: OnItemClickListener? = null
+    fun setMovies(movies: List<Movie>/*, listener: OnItemClickListener*/) {
         this.movieList = movies.toMutableList()
+      /*  this.listener = listener*/
         notifyDataSetChanged()
     }
 
@@ -31,6 +33,11 @@ class MovieAdapter : RecyclerView.Adapter<MainViewHolder>() {
             holder.binding.name.text = movie.name
             Glide.with(holder.itemView.context).load(movie.imageUrl).into(holder.binding.imageview)
         }
+
+        holder.itemView.setOnClickListener {
+            listener!!.onItemClick(holder.itemView)
+        }
+
     }
 
     override fun getItemCount(): Int {

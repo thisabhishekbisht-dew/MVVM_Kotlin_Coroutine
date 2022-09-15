@@ -12,6 +12,10 @@ import com.abhi.mvvm.repository.MainRepository
 import com.abhi.mvvm.retrofit.RetrofitService
 import com.abhi.mvvm.viewModel.MainViewModel
 import com.abhi.mvvm.viewModel.MyViewModelFactory
+import com.google.android.material.snackbar.Snackbar
+import com.microsoft.appcenter.AppCenter
+import com.microsoft.appcenter.analytics.Analytics
+import com.microsoft.appcenter.crashes.Crashes
 
 class MainActivity : AppCompatActivity() {
     lateinit var viewModel: MainViewModel
@@ -24,14 +28,29 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         val retrofitService = RetrofitService.getInstance()
         val mainRepository = MainRepository(retrofitService)
+
+        /*app centre*/
+        AppCenter.start(
+            application, "e898d113-52a2-4afe-9cf2-a3af9876d59d",
+            Analytics::class.java, Crashes::class.java
+        )
         binding.recyclerview.adapter = adapter
 
-        viewModel = ViewModelProvider(this, MyViewModelFactory(mainRepository)).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(
+            this,
+            MyViewModelFactory(mainRepository)
+        ).get(MainViewModel::class.java)
 
 
-        viewModel.movieList.observe(this, {
+        /*image click listner */
+        binding.recyclerview.setOnClickListener{
+            Snackbar.make(it,"Hello there ",Snackbar.LENGTH_LONG).show()
+        }
+
+        viewModel.movieList.observe(this) {
             adapter.setMovies(it)
-        })
+        }
+
 
         viewModel.errorMessage.observe(this, {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
