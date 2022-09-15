@@ -16,6 +16,16 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    flavorDimensions 'remoteKernel'
+    productFlavors {
+        devKernel {
+            dimension 'remoteKernel'
+        }
+        prodKernel {
+            dimension 'remoteKernel'
+        }
+    }
+
     testOptions {
         unitTests {
             includeAndroidResources = true
