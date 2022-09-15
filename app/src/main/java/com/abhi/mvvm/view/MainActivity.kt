@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
             application, "e898d113-52a2-4afe-9cf2-a3af9876d59d",
             Analytics::class.java, Crashes::class.java
         )
+        /*addedd appcentre to this project*/
         binding.recyclerview.adapter = adapter
 
         viewModel = ViewModelProvider(
