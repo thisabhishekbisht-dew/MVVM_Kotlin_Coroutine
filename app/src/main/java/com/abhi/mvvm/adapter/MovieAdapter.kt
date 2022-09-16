@@ -15,10 +15,11 @@ class MovieAdapter : RecyclerView.Adapter<MainViewHolder>() {
     var listener: OnItemClickListener? = null
     fun setMovies(movies: List<Movie>/*, listener: OnItemClickListener*/) {
         this.movieList = movies.toMutableList()
-      /*  this.listener = listener*/
+        /*  this.listener = listener*/
         notifyDataSetChanged()
     }
 
+    /*Andorid studio changes*/
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
 
         val inflater = LayoutInflater.from(parent.context)
